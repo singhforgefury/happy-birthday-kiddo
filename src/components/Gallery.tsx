@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
 import { memories } from "@/data/content";
 import { Reveal, SectionHeading } from "./Reveal";
+import { Sunflower } from "./Atmosphere";
 
 const spanClass: Record<string, string> = {
   tall: "aspect-[3/4.4]",

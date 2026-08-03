@@ -245,3 +245,41 @@ export function MusicPlayer({ active }: { active: boolean }) {
     </motion.div>
   );
 }
+
+/** Circular album-art placeholder — a softly spinning vinyl of gold and rose. */
+function Disc({
+  index,
+  spinning,
+  size,
+}: {
+  index: number;
+  spinning: boolean;
+  size: number;
+}) {
+  const hues = [0.5, 40, 88, 320, 200];
+  const h = hues[index % hues.length];
+  return (
+    <span
+      aria-hidden
+      className="relative block shrink-0 rounded-full"
+      style={{
+        width: size,
+        height: size,
+        background: `conic-gradient(from ${index * 60}deg, oklch(0.66 0.212 ${h} / 0.9), oklch(0.85 0.148 88 / 0.85), oklch(0.77 0.135 2 / 0.9), oklch(0.66 0.212 ${h} / 0.9))`,
+        boxShadow: "inset 0 0 0 1px oklch(1 0 0 / 0.18), 0 6px 18px -8px oklch(0 0 0 / 0.8)",
+        animation: spinning ? "disc-spin 9s linear infinite" : undefined,
+      }}
+    >
+      <span
+        className="absolute top-1/2 left-1/2 rounded-full"
+        style={{
+          width: size * 0.28,
+          height: size * 0.28,
+          transform: "translate(-50%, -50%)",
+          background: "oklch(0.11 0.028 268)",
+          boxShadow: "inset 0 0 0 1px oklch(1 0 0 / 0.2)",
+        }}
+      />
+    </span>
+  );
+}

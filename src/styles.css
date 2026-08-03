@@ -253,3 +253,24 @@
     opacity: 0;
   }
 }
+
+@keyframes disc-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bloom-in {
+  0% {
+    transform: scale(0.7) rotate(-18deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08) rotate(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}

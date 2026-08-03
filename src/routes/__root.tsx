@@ -77,23 +77,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Happy Birthday, Lisha ❤️" },
+      {
+        name: "description",
+        content:
+          "A cinematic, interactive love letter for Lisha's birthday on 13 August — our story, our memories, and somewhere only we know.",
+      },
+      { name: "author", content: "For Lisha" },
+      { property: "og:title", content: "Happy Birthday, Lisha ❤️" },
+      {
+        property: "og:description",
+        content: "An interactive love story that happens to celebrate her birthday.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..800;1,400..700&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=Manrope:wght@300..700&family=Parisienne&display=swap",
+      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,

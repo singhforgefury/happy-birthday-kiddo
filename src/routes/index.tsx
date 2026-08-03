@@ -1,7 +1,7 @@
 import { AnimatePresence } from "motion/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Atmosphere, MouseGlow, Sunflower } from "@/components/Atmosphere";
+import { Atmosphere, DriftingPetals, MouseGlow, Sunflower } from "@/components/Atmosphere";
 import { Constellation } from "@/components/Constellation";
 import { FinalSurprise } from "@/components/FinalSurprise";
 import { Gallery } from "@/components/Gallery";
@@ -57,9 +57,10 @@ function Index() {
           <Letter />
           <FinalSurprise onBrighten={setBright} />
 
-          <footer className="relative px-6 pb-32 text-center">
-            <div className="mx-auto mb-8 h-[1px] w-24 bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
-            <div className="flex items-center justify-center gap-3">
+          <footer className="relative overflow-hidden px-6 pt-10 pb-32 text-center">
+            <DriftingPetals count={14} />
+            <div className="relative mx-auto mb-8 h-[1px] w-24 bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
+            <div className="relative flex items-center justify-center gap-3">
               <Sunflower size={18} className="opacity-60" />
               <p className="font-serif text-sm text-muted-foreground italic">
                 Made only for {BIRTHDAY.name} · {BIRTHDAY.date}

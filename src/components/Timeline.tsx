@@ -37,18 +37,29 @@ export function Timeline() {
                 </div>
 
                 <div
-                  className={`glass glass-hover rounded-3xl p-6 sm:p-7 [direction:ltr] ${
+                  className={`glass glass-hover group relative overflow-hidden rounded-3xl p-6 sm:p-7 [direction:ltr] ${
                     i % 2 ? "md:text-left" : "md:text-right"
                   }`}
                 >
-                  <p className="font-sans text-[0.6rem] tracking-[0.34em] text-gold/85 uppercase">
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+                    style={{
+                      background:
+                        "radial-gradient(90% 120% at 50% 0%, oklch(0.85 0.148 88 / 0.14), transparent 70%)",
+                    }}
+                  />
+                  <p className="font-sans relative text-[0.6rem] tracking-[0.34em] text-gold/85 uppercase">
                     {ev.place}
                   </p>
-                  <h3 className="font-display mt-3 text-2xl leading-tight text-cream sm:text-3xl">
+                  <h3 className="font-display relative mt-3 text-2xl leading-tight text-cream sm:text-3xl">
                     {ev.title}
                   </h3>
-                  <p className="font-serif mt-3 text-base text-muted-foreground italic">
+                  <p className="font-serif relative mt-3 text-base text-muted-foreground italic">
                     {ev.note}
+                  </p>
+                  <p className="font-sans relative mt-4 text-[0.58rem] tracking-[0.28em] text-cream/40 uppercase">
+                    {ev.when}
                   </p>
                 </div>
 

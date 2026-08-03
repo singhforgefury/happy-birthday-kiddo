@@ -90,33 +90,69 @@ export function MusicPlayer({ active }: { active: boolean }) {
       />
 
       {open && (
-        <motion.ul
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 12, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="glass mb-2 overflow-hidden rounded-2xl p-2"
         >
-          {songs.map((s, i) => (
-            <li key={s.src}>
-              <button
-                onClick={() => go(i)}
-                className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-glow/5 ${
-                  i === index ? "text-rose-soft" : "text-muted-foreground"
-                }`}
-              >
-                <span className="font-sans w-4 text-[0.65rem] tracking-widest">{i + 1}</span>
-                <span className="font-serif min-w-0 flex-1 truncate text-sm">{s.title}</span>
-              </button>
-            </li>
-          ))}
-        </motion.ul>
+          <p className="font-sans px-3 pt-1 pb-2 text-[0.55rem] tracking-[0.32em] text-gold/70 uppercase">
+            Our Playlist
+          </p>
+          <ul>
+            {songs.map((s, i) => {
+              const newChapter = songs[i - 1]?.chapter !== s.chapter;
+              return (
+                <li key={s.src}>
+                  {newChapter && (
+                    <p className="font-serif mt-2 px-3 pb-1 text-[0.8rem] text-cream/55 italic">
+                      {s.emoji} {s.chapter}
+                    </p>
+                  )}
+                  <button
+                    onClick={() => go(i)}
+                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left transition-all duration-300 hover:bg-glow/[0.06] ${
+                      i === index ? "bg-glow/[0.05] text-rose-soft" : "text-muted-foreground"
+                    }`}
+                  >
+                    <Disc index={i} spinning={i === index && playing} size={30} />
+                    <span className="min-w-0 flex-1">
+                      <span className="font-serif block truncate text-sm">{s.title}</span>
+                      <span className="font-sans block truncate text-[0.58rem] tracking-[0.18em] text-muted-foreground/80 uppercase">
+                        {s.artist}
+                      </span>
+                    </span>
+                    {i === index && (
+                      <span aria-hidden className="flex items-end gap-[2px]">
+                        {[0, 1, 2].map((b) => (
+                          <span
+                            key={b}
+                            className="w-[2px] rounded-full bg-rose-soft"
+                            style={{
+                              height: playing ? 10 : 4,
+                              animation: playing
+                                ? `float-soft ${0.9 + b * 0.25}s ease-in-out infinite`
+                                : undefined,
+                            }}
+                          />
+                        ))}
+                      </span>
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </motion.div>
       )}
 
       <div className="glass rounded-2xl px-4 py-3.5">
-        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
+        <div className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3">
+          <Disc index={index} spinning={playing} size={40} />
           <div className="min-w-0">
             <p className="font-serif truncate text-sm text-cream">{track.title}</p>
             <p className="font-sans truncate text-[0.65rem] tracking-[0.2em] text-muted-foreground uppercase">
-              {track.artist}
+              {track.emoji} {track.artist}
             </p>
           </div>
           <button
@@ -207,5 +243,43 @@ export function MusicPlayer({ active }: { active: boolean }) {
         </div>
       </div>
     </motion.div>
+  );
+}
+
+/** Circular album-art placeholder — a softly spinning vinyl of gold and rose. */
+function Disc({
+  index,
+  spinning,
+  size,
+}: {
+  index: number;
+  spinning: boolean;
+  size: number;
+}) {
+  const hues = [0.5, 40, 88, 320, 200];
+  const h = hues[index % hues.length];
+  return (
+    <span
+      aria-hidden
+      className="relative block shrink-0 rounded-full"
+      style={{
+        width: size,
+        height: size,
+        background: `conic-gradient(from ${index * 60}deg, oklch(0.66 0.212 ${h} / 0.9), oklch(0.85 0.148 88 / 0.85), oklch(0.77 0.135 2 / 0.9), oklch(0.66 0.212 ${h} / 0.9))`,
+        boxShadow: "inset 0 0 0 1px oklch(1 0 0 / 0.18), 0 6px 18px -8px oklch(0 0 0 / 0.8)",
+        animation: spinning ? "disc-spin 9s linear infinite" : undefined,
+      }}
+    >
+      <span
+        className="absolute top-1/2 left-1/2 rounded-full"
+        style={{
+          width: size * 0.28,
+          height: size * 0.28,
+          transform: "translate(-50%, -50%)",
+          background: "oklch(0.11 0.028 268)",
+          boxShadow: "inset 0 0 0 1px oklch(1 0 0 / 0.2)",
+        }}
+      />
+    </span>
   );
 }

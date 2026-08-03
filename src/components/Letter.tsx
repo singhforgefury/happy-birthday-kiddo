@@ -1,10 +1,13 @@
 import { letter } from "@/data/content";
 import { Reveal, SectionHeading } from "./Reveal";
-import { Sunflower } from "./Atmosphere";
+import { Sunflower, SunflowerDivider } from "./Atmosphere";
 
 export function Letter() {
   return (
     <section id="letter" className="relative px-6 py-28 sm:py-40">
+      <Reveal>
+        <SunflowerDivider className="mb-16" />
+      </Reveal>
       <SectionHeading eyebrow="A Letter" title="Something I wrote for you" />
 
       <Reveal delay={0.1} className="mx-auto mt-16 max-w-3xl">

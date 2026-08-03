@@ -1,7 +1,7 @@
 /**
  * ─────────────────────────────────────────────────────────────
  *  EDIT EVERYTHING HERE — this is the only file you need to touch
- *  to replace photos, captions, reasons, songs and the letters.
+ *  to change photos, captions, reasons, songs and the letters.
  * ─────────────────────────────────────────────────────────────
  */
 
@@ -14,65 +14,127 @@ export const BIRTHDAY = {
 };
 
 /**
- * MUSIC — drop your .mp3 files into `public/music/` and keep the same names,
- * or change `src` to any URL. Titles/artists are free text.
+ * MUSIC — drop your .mp3 files into `public/music/` keeping the same names,
+ * or point `src` at any URL. `chapter` groups the songs in the playlist.
  */
-export type Song = { title: string; artist: string; src: string };
+export type Song = {
+  title: string;
+  artist: string;
+  chapter: string;
+  emoji: string;
+  src: string;
+};
 
 export const songs: Song[] = [
-  { title: "Love Section", artist: "Our Song", src: "/music/song-1.mp3" },
-  { title: "Yeh Fitoor Mera", artist: "Our Song", src: "/music/song-2.mp3" },
-  { title: "Happy Memories", artist: "Our Song", src: "/music/song-3.mp3" },
-  { title: "Where'd All the Time Go?", artist: "Our Song", src: "/music/song-4.mp3" },
-  { title: "Forever", artist: "Our Song", src: "/music/song-5.mp3" },
-  { title: "Little Dippers", artist: "Our Song", src: "/music/song-6.mp3" },
-  { title: "Just The Two Of Us", artist: "Grover Washington Jr.", src: "/music/song-7.mp3" },
+  {
+    title: "Yeh Fitoor Mera",
+    artist: "Arijit Singh",
+    chapter: "Love",
+    emoji: "❤️",
+    src: "/music/song-1.mp3",
+  },
+  {
+    title: "Where'd All the Time Go?",
+    artist: "Dr. Dog",
+    chapter: "Happy Memories",
+    emoji: "🌤",
+    src: "/music/song-2.mp3",
+  },
+  {
+    title: "Just the Two of Us",
+    artist: "Grover Washington Jr.",
+    chapter: "Our Song",
+    emoji: "🤍",
+    src: "/music/song-3.mp3",
+  },
+  {
+    title: "Forever",
+    artist: "Labrinth",
+    chapter: "Ending",
+    emoji: "🌙",
+    src: "/music/song-4.mp3",
+  },
+  {
+    title: "Forever",
+    artist: "The Little Dippers",
+    chapter: "Ending",
+    emoji: "🌙",
+    src: "/music/song-5.mp3",
+  },
 ];
 
 /** OUR STORY timeline */
-export type StoryEvent = { icon: string; title: string; place: string; note: string };
+export type StoryEvent = {
+  icon: string;
+  title: string;
+  place: string;
+  when: string;
+  note: string;
+};
 
 export const story: StoryEvent[] = [
   {
     icon: "🥋",
     title: "First saw each other",
     place: "MMA Gym",
-    note: "Before a single word, there was already a feeling.",
+    when: "Where it started",
+    note: "Before a single word was said, there was already a feeling I couldn't name.",
   },
   {
     icon: "🏸",
     title: "First met",
-    place: "Badminton at Vindha Gardens Society",
-    note: "A game, a laugh, and the beginning of everything.",
+    place: "Vindha Gardens Society",
+    when: "Badminton evenings",
+    note: "A game, a laugh, and a conversation that refused to end.",
   },
   {
     icon: "☕",
     title: "First official date",
     place: "Pawfee House",
-    note: "Coffee got cold because we forgot the world existed.",
+    when: "Our first table for two",
+    note: "The coffee went cold because we forgot the rest of the world existed.",
   },
   {
     icon: "❤️",
     title: "Love Anniversary",
     place: "10 April 2025",
-    note: "The day 'us' became a promise.",
+    when: "The day we said yes",
+    note: "The day 'us' stopped being a feeling and became a promise.",
   },
   {
     icon: "🎂",
     title: "Happy Birthday",
     place: "13 August",
-    note: "Today. Yours. Ours. Forever my favourite date.",
+    when: "Today",
+    note: "Yours, mine, ours — my favourite date on every calendar.",
   },
 ];
 
 /**
  * MEMORY GALLERY — 16 photos.
- * To use your own photo: put the file in `src/assets/memories/` and import it,
- * or simply drop files into `public/memories/` named photo-01.jpg … photo-16.jpg
- * (that's what the paths below already expect). Until then an elegant
- * placeholder frame is shown automatically.
+ * Drop files into `public/memories/` named photo-01.jpg … photo-16.jpg
+ * and they appear automatically, in this order. Captions below.
  */
 export type Memory = { src: string; caption: string; span: "tall" | "wide" | "normal" };
+
+const captions: string[] = [
+  "The day everything quietly began.",
+  "A smile I'll never get tired of.",
+  "Our favourite little adventure.",
+  "The moment I wished time would slow down.",
+  "You, laughing at something only we found funny.",
+  "Golden hour, and you glowing right through it.",
+  "The evening we lost track of every hour.",
+  "Somewhere between a plan and an accident.",
+  "Rain, one umbrella, zero complaints.",
+  "The look you give me when you think I'm not watching.",
+  "A very ordinary Tuesday that I still remember perfectly.",
+  "Coffee, sunlight, and nowhere else to be.",
+  "The night the whole city felt like ours.",
+  "Sunflowers, because of course.",
+  "Us, exactly as we are.",
+  "And still my favourite photograph.",
+];
 
 const spans: Memory["span"][] = [
   "tall",
@@ -95,23 +157,34 @@ const spans: Memory["span"][] = [
 
 export const memories: Memory[] = Array.from({ length: 16 }, (_, i) => ({
   src: `/memories/photo-${String(i + 1).padStart(2, "0")}.jpg`,
-  caption: `Caption ${i + 1} — replace me with the story behind this photo.`,
+  caption: captions[i] ?? "A moment worth keeping.",
   span: spans[i] ?? "normal",
 }));
 
 /** 13 THINGS I LOVE ABOUT YOU */
-export const reasons: string[] = Array.from(
-  { length: 13 },
-  (_, i) => `Reason ${i + 1} — replace this with something only you two would understand.`,
-);
+export const reasons: string[] = [
+  "The way your laugh arrives a second before the joke lands.",
+  "How you make an ordinary evening feel like an occasion.",
+  "That you notice the smallest things — and remember them.",
+  "The way you care about people without ever making it a performance.",
+  "How stubbornly kind you are, even on your worst days.",
+  "Your terrible, wonderful sense of timing.",
+  "The way you say my name when you're happy about something.",
+  "That you are the calm and the chaos, and somehow both suit you.",
+  "How you keep growing, quietly and relentlessly.",
+  "The sunflowers. Always the sunflowers.",
+  "That silence with you never once felt empty.",
+  "How safe the world feels when you're in it.",
+  "And that out of everyone, you chose me.",
+];
 
 /** FINAL LETTER (handwritten paper) */
 export const letter = {
   greeting: "My dearest Lisha,",
   paragraphs: [
-    "Replace this paragraph with the first thing you want her to read. Say the quiet thing — the one you never manage to say out loud.",
-    "Replace this paragraph with a memory. The smallest one. The one that plays in your head when the day gets loud.",
-    "Replace this paragraph with a promise for the year ahead, and everything after it.",
+    "There are things I say easily, and then there is this — the quiet thing I keep meaning to tell you and never quite manage out loud. So I'm writing it instead: loving you is the simplest decision I've ever made.",
+    "When the day gets loud, my mind goes back to something small. Not a big moment. Just you, mid-sentence, eyes bright, completely unaware that I was busy falling for you all over again.",
+    "This year, I promise you more of the ordinary: more late conversations, more badminton evenings, more coffee that goes cold. And every year after that, the same promise again.",
   ],
   signature: "Always yours,",
   from: "— Me",
@@ -120,15 +193,15 @@ export const letter = {
 /** FINAL SURPRISE message */
 export const finalMessage = {
   heading: "Happy Birthday, my love ❤️",
-  body: "Replace this with your final birthday message. Something warm, something forever. Here's to 13 August, and to every ordinary day made extraordinary by you.",
+  body: "Here's to 13 August, and to every ordinary day you quietly turn into something extraordinary. Thank you for being the best part of my life. I hope this year is as warm and beautiful as you are.",
 };
 
 /** SECRET PAGE note */
 export const secretNote = {
   title: "Somewhere Only We Know",
   paragraphs: [
-    "Replace this private note. This page is only for her — the quiet corner of the sky where we keep our secrets.",
-    "Write the thing that belongs to nobody else.",
+    "You found it. Of course you did — you always find the things meant only for you.",
+    "This is the quiet corner of the sky where we keep our secrets. No occasion, no audience. Just this: whatever happens, wherever we end up, I'm choosing you.",
   ],
   signature: "— Yours, under the same stars",
 };

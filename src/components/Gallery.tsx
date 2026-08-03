@@ -158,19 +158,24 @@ function Photo({ src, index, large = false }: { src: string; index: number; larg
 
   if (failed) {
     return (
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center">
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-center">
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(135deg, oklch(0.66 0.212 0.5 / 0.16), oklch(0.85 0.148 88 / 0.10))",
+              "linear-gradient(135deg, oklch(0.66 0.212 0.5 / 0.18), oklch(0.85 0.148 88 / 0.12) 60%, oklch(0.11 0.028 268 / 0.5))",
           }}
         />
-        <span className="font-display relative text-3xl text-cream/40">
+        <div
+          aria-hidden
+          className="absolute inset-4 rounded-2xl"
+          style={{ border: "1px solid oklch(0.85 0.148 88 / 0.22)" }}
+        />
+        <div className="relative" style={{ animation: "float-soft 8s ease-in-out infinite" }}>
+          <Sunflower size={large ? 46 : 30} className="opacity-70" />
+        </div>
+        <span className="font-display relative text-2xl text-cream/35">
           {String(index + 1).padStart(2, "0")}
-        </span>
-        <span className="font-sans relative px-6 text-[0.6rem] tracking-[0.28em] text-cream/45 uppercase">
-          {large ? "Add photo-" + String(index + 1).padStart(2, "0") + ".jpg" : "Your photo here"}
         </span>
       </div>
     );

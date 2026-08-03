@@ -4,9 +4,10 @@ import { memories } from "@/data/content";
 import { Reveal, SectionHeading } from "./Reveal";
 
 const spanClass: Record<string, string> = {
-  tall: "sm:row-span-2 aspect-[3/4] sm:aspect-[3/4.6]",
-  wide: "sm:col-span-2 aspect-[4/3] sm:aspect-[16/10]",
+  tall: "aspect-[3/4.4]",
+  wide: "aspect-[16/10]",
   normal: "aspect-square",
+
 };
 
 export function Gallery() {

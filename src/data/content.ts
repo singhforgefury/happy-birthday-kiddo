@@ -20,10 +20,13 @@ export const BIRTHDAY = {
 export type Song = { title: string; artist: string; src: string };
 
 export const songs: Song[] = [
-  { title: "Song One — Replace Me", artist: "Our Song", src: "/music/song-1.mp3" },
-  { title: "Song Two — Replace Me", artist: "Our Song", src: "/music/song-2.mp3" },
-  { title: "Song Three — Replace Me", artist: "Our Song", src: "/music/song-3.mp3" },
-  { title: "Song Four — Replace Me", artist: "Our Song", src: "/music/song-4.mp3" },
+  { title: "Love Section", artist: "Our Song", src: "/music/song-1.mp3" },
+  { title: "Yeh Fitoor Mera", artist: "Our Song", src: "/music/song-2.mp3" },
+  { title: "Happy Memories", artist: "Our Song", src: "/music/song-3.mp3" },
+  { title: "Where'd All the Time Go?", artist: "Our Song", src: "/music/song-4.mp3" },
+  { title: "Forever", artist: "Our Song", src: "/music/song-5.mp3" },
+  { title: "Little Dippers", artist: "Our Song", src: "/music/song-6.mp3" },
+  { title: "Just The Two Of Us", artist: "Grover Washington Jr.", src: "/music/song-7.mp3" },
 ];
 
 /** OUR STORY timeline */

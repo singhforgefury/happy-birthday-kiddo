@@ -153,3 +153,16 @@ export function Sunflower({ className = "", size = 28 }: { className?: string; s
     </svg>
   );
 }
+
+/** A slim gold rule with a blooming sunflower at its centre. */
+export function SunflowerDivider({ className = "" }: { className?: string }) {
+  return (
+    <div aria-hidden className={`flex items-center justify-center gap-4 ${className}`}>
+      <span className="h-[1px] w-16 bg-gradient-to-r from-transparent to-gold/40 sm:w-28" />
+      <span style={{ animation: "bloom 9s ease-in-out infinite" }}>
+        <Sunflower size={26} className="opacity-85" />
+      </span>
+      <span className="h-[1px] w-16 bg-gradient-to-l from-transparent to-gold/40 sm:w-28" />
+    </div>
+  );
+}

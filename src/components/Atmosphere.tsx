@@ -166,3 +166,43 @@ export function SunflowerDivider({ className = "" }: { className?: string }) {
     </div>
   );
 }
+
+/** A few gold petals drifting across a section — used to close the story. */
+export function DriftingPetals({ count = 12 }: { count?: number }) {
+  const [items, setItems] = useState<Petal[]>([]);
+
+  useEffect(() => {
+    setItems(
+      Array.from({ length: count }, () => ({
+        x: Math.random() * 100,
+        size: Math.random() * 10 + 9,
+        dur: Math.random() * 8 + 10,
+        delay: Math.random() * 10,
+        drift: Math.random() * 30 - 15,
+      })),
+    );
+  }, [count]);
+
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      {items.map((p, i) => (
+        <span
+          key={i}
+          className="absolute top-0 block"
+          style={
+            {
+              left: `${p.x}%`,
+              width: p.size,
+              height: p.size * 0.55,
+              borderRadius: "60% 40% 55% 45% / 70% 60% 40% 30%",
+              background:
+                "linear-gradient(120deg, oklch(0.92 0.15 92 / 0.95), oklch(0.78 0.16 78 / 0.5))",
+              animation: `petal-fall ${p.dur}s linear ${p.delay}s infinite`,
+              "--drift": `${p.drift}vw`,
+            } as React.CSSProperties
+          }
+        />
+      ))}
+    </div>
+  );
+}

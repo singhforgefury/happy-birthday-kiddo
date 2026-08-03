@@ -40,12 +40,13 @@ export function Gallery() {
         lead="A scrapbook of ordinary days that turned out to be the best ones."
       />
 
-      <div className="mx-auto mt-20 grid max-w-6xl auto-rows-auto grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+      <div className="mx-auto mt-20 max-w-6xl columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5">
         {memories.map((m, i) => (
           <Reveal
             key={i}
-            delay={(i % 4) * 0.06}
-            className={`${m.span === "tall" ? "sm:row-span-2" : ""} ${m.span === "wide" ? "sm:col-span-2" : ""}`}
+            delay={(i % 3) * 0.06}
+            className="break-inside-avoid"
+
           >
             <figure className="group">
               <button

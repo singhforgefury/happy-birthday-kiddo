@@ -1,7 +1,7 @@
 import { AnimatePresence } from "motion/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Atmosphere, MouseGlow, Sunflower } from "@/components/Atmosphere";
+import { Atmosphere, DriftingPetals, MouseGlow, Sunflower } from "@/components/Atmosphere";
 import { Constellation } from "@/components/Constellation";
 import { FinalSurprise } from "@/components/FinalSurprise";
 import { Gallery } from "@/components/Gallery";

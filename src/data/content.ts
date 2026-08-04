@@ -25,43 +25,63 @@ export type Song = {
   src: string;
 };
 
-export const songs: Song[] = [
-  {
-    title: "Yeh Fitoor Mera",
-    artist: "Arijit Singh",
-    chapter: "Love",
-    emoji: "❤️",
-    src: "/music/song-1.mp3",
-  },
-  {
-    title: "Where'd All the Time Go?",
-    artist: "Dr. Dog",
-    chapter: "Happy Memories",
-    emoji: "🌤",
-    src: "/music/song-2.mp3",
-  },
-  {
-    title: "Just the Two of Us",
-    artist: "Grover Washington Jr.",
-    chapter: "Our Song",
-    emoji: "🤍",
-    src: "/music/song-3.mp3",
-  },
-  {
-    title: "Forever",
-    artist: "Labrinth",
-    chapter: "Ending",
-    emoji: "🌙",
-    src: "/music/song-4.mp3",
-  },
-  {
-    title: "Forever",
-    artist: "The Little Dippers",
-    chapter: "Ending",
-    emoji: "🌙",
-    src: "/music/song-5.mp3",
-  },
-];
+/**
+ * Songs are discovered automatically from `public/music/playlist/`.
+ * Metadata below is matched loosely by filename, so "01 - Yeh Fitoor Mera.mp3"
+ * still gets the right artist, chapter and emoji.
+ */
+const songMeta: { match: string; title: string; artist: string; chapter: string; emoji: string }[] =
+  [
+    {
+      match: "yehfitoormera",
+      title: "Yeh Fitoor Mera",
+      artist: "Arijit Singh",
+      chapter: "Love",
+      emoji: "❤️",
+    },
+    {
+      match: "wheredallthetimego",
+      title: "Where'd All the Time Go?",
+      artist: "Dr. Dog",
+      chapter: "Happy Memories",
+      emoji: "🌤",
+    },
+    {
+      match: "justthetwoofus",
+      title: "Just the Two of Us",
+      artist: "Grover Washington Jr.",
+      chapter: "Our Song",
+      emoji: "🤍",
+    },
+    {
+      match: "forever",
+      title: "Forever",
+      artist: "The Little Dippers",
+      chapter: "Forever",
+      emoji: "🌙",
+    },
+    {
+      match: "lovemenot",
+      title: "Love Me Not",
+      artist: "Ravyn Lenae",
+      chapter: "Forever",
+      emoji: "🌙",
+    },
+    { match: "kids", title: "Kids", artist: "Current Joys", chapter: "Ending", emoji: "✨" },
+  ];
+
+export const songs: Song[] = audioUrls.map((src) => {
+  const key = slug(src.split("/").pop() ?? src);
+  const meta = songMeta.find((m) => key.includes(m.match));
+  return {
+    title: meta?.title ?? titleFromUrl(src),
+    artist: meta?.artist ?? "Our playlist",
+    chapter: meta?.chapter ?? "More",
+    emoji: meta?.emoji ?? "🎵",
+    src,
+  };
+});
+
 
 /** OUR STORY timeline */
 export type StoryEvent = {

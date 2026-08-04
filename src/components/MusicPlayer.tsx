@@ -24,7 +24,6 @@ export function MusicPlayer({ active }: { active: boolean }) {
   const [blocked, setBlocked] = useState(false);
   // If the audio file itself can't load, never show the play overlay.
   const [audioBroken, setAudioBroken] = useState(false);
-  const [canPlay, setCanPlay] = useState(false);
 
   const play = useCallback(() => {
     const el = audioRef.current;
@@ -56,6 +55,18 @@ export function MusicPlayer({ active }: { active: boolean }) {
     const el = audioRef.current;
     if (el) el.volume = volume;
   }, [volume]);
+
+  // Browsers allow audio after the first genuine gesture — take it quietly.
+  useEffect(() => {
+    if (!blocked) return;
+    const retry = () => play();
+    window.addEventListener("pointerdown", retry, { once: true });
+    window.addEventListener("keydown", retry, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", retry);
+      window.removeEventListener("keydown", retry);
+    };
+  }, [blocked, play]);
 
   const toggle = () => {
     const el = audioRef.current;
@@ -116,46 +127,33 @@ export function MusicPlayer({ active }: { active: boolean }) {
 
   return (
     <>
-      {blocked && canPlay && !audioBroken && (
+      {blocked && !audioBroken && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onClick={() => setBlocked(false)}
-          className="fixed inset-0 z-[60] flex items-center justify-center px-6"
-          style={{
-            background: "oklch(0.06 0.02 268 / 0.72)",
-            backdropFilter: "blur(24px) saturate(120%)",
-          }}
+          initial={{ opacity: 0, y: 16, filter: "blur(12px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          className="fixed bottom-32 left-1/2 z-50 w-[min(20rem,calc(100vw-2rem))] -translate-x-1/2 sm:bottom-36 sm:left-6 sm:translate-x-0"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20, filter: "blur(14px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            onClick={(e) => e.stopPropagation()}
-            className="glass max-w-sm rounded-[2rem] px-8 py-10 text-center"
-          >
-            <p className="font-sans text-[0.55rem] tracking-[0.36em] text-gold/70 uppercase">
+          <div className="glass rounded-[1.5rem] px-6 py-6 text-center">
+            <p className="font-sans text-[0.5rem] tracking-[0.36em] text-gold/70 uppercase">
               One small thing
             </p>
-            <h3 className="font-display mt-4 text-2xl text-cream sm:text-3xl">
-              This story has a soundtrack
-            </h3>
-            <p className="font-serif mt-3 text-base text-muted-foreground italic">
+            <h3 className="font-display mt-3 text-xl text-cream">This story has a soundtrack</h3>
+            <p className="font-serif mt-2 text-sm text-muted-foreground italic">
               Your browser wants your permission before the music begins.
             </p>
             <button
               onClick={play}
-              className="glass glass-hover mt-8 cursor-pointer rounded-full px-8 py-3.5 text-[0.65rem] tracking-[0.28em] text-cream uppercase"
+              className="glass glass-hover mt-5 cursor-pointer rounded-full px-7 py-3 text-[0.6rem] tracking-[0.28em] text-cream uppercase"
             >
               Play the music
             </button>
             <button
               onClick={() => setBlocked(false)}
-              className="font-sans mt-5 block w-full cursor-pointer text-[0.55rem] tracking-[0.3em] text-muted-foreground uppercase transition-colors hover:text-cream"
+              className="font-sans mt-4 block w-full cursor-pointer text-[0.5rem] tracking-[0.3em] text-muted-foreground uppercase transition-colors hover:text-cream"
             >
               Continue in silence
             </button>
-          </motion.div>
+          </div>
         </motion.div>
       )}
 
@@ -169,17 +167,13 @@ export function MusicPlayer({ active }: { active: boolean }) {
           ref={audioRef}
           src={track.src}
           preload="metadata"
-          onCanPlay={() => {
-            setCanPlay(true);
-            setAudioBroken(false);
-          }}
+          onCanPlay={() => setAudioBroken(false)}
           onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
           onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
           onEnded={() => advance(1, true)}
           onError={() => {
             setPlaying(false);
             setAudioBroken(true);
-            setCanPlay(false);
             setBlocked(false);
           }}
         />

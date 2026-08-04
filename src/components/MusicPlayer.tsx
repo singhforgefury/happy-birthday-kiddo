@@ -353,7 +353,7 @@ function IconBtn({
   active: boolean;
   onClick: () => void;
   path: string;
-  badge?: string;
+  badge?: string | undefined;
 }) {
   return (
     <button

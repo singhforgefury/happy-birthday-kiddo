@@ -274,3 +274,65 @@
     opacity: 1;
   }
 }
+
+@keyframes scroll-trail {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(320%);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Premium polaroid frame — cream card, deep soft shadow, hand-placed tilt. */
+@utility polaroid {
+  background: linear-gradient(160deg, oklch(0.98 0.02 92), oklch(0.94 0.03 88));
+  padding: 0.85rem 0.85rem 0.35rem;
+  border-radius: 0.55rem;
+  color: oklch(0.32 0.05 40);
+  transform: rotate(var(--tilt, 0deg));
+  box-shadow:
+    0 26px 60px -28px oklch(0 0 0 / 0.85),
+    0 2px 0 oklch(1 0 0 / 0.35) inset;
+  transition:
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    transform: rotate(0deg) translateY(-10px) scale(1.025);
+    box-shadow:
+      0 46px 100px -34px oklch(0 0 0 / 0.95),
+      0 0 60px -18px oklch(0.85 0.148 88 / 0.45);
+  }
+}
+
+/* Fine paper texture for the handwritten letter. */
+@utility paper-grain {
+  opacity: 0.5;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      oklch(0.42 0.09 60 / 0.035) 0px,
+      transparent 1px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      oklch(0.42 0.09 60 / 0.03) 0px,
+      transparent 1px,
+      transparent 4px
+    );
+}

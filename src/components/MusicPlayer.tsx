@@ -22,6 +22,8 @@ export function MusicPlayer({ active }: { active: boolean }) {
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState<RepeatMode>("all");
   const [blocked, setBlocked] = useState(false);
+  // If the audio file itself can't load, never show the play overlay.
+  const [audioBroken, setAudioBroken] = useState(false);
 
   const play = useCallback(() => {
     const el = audioRef.current;
@@ -33,7 +35,9 @@ export function MusicPlayer({ active }: { active: boolean }) {
       },
       () => {
         setPlaying(false);
-        setBlocked(true);
+        const el2 = audioRef.current;
+        if (!el2 || el2.error) setAudioBroken(true);
+        else setBlocked(true);
       },
     );
   }, []);
@@ -111,10 +115,11 @@ export function MusicPlayer({ active }: { active: boolean }) {
 
   return (
     <>
-      {blocked && (
+      {blocked && !audioBroken && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
+          onClick={() => setBlocked(false)}
           className="fixed inset-0 z-[60] flex items-center justify-center px-6"
           style={{
             background: "oklch(0.06 0.02 268 / 0.72)",
@@ -125,6 +130,7 @@ export function MusicPlayer({ active }: { active: boolean }) {
             initial={{ opacity: 0, y: 20, filter: "blur(14px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            onClick={(e) => e.stopPropagation()}
             className="glass max-w-sm rounded-[2rem] px-8 py-10 text-center"
           >
             <p className="font-sans text-[0.55rem] tracking-[0.36em] text-gold/70 uppercase">
@@ -165,7 +171,11 @@ export function MusicPlayer({ active }: { active: boolean }) {
           onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
           onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
           onEnded={() => advance(1, true)}
-          onError={() => setPlaying(false)}
+          onError={() => {
+            setPlaying(false);
+            setAudioBroken(true);
+            setBlocked(false);
+          }}
         />
 
         {open && (

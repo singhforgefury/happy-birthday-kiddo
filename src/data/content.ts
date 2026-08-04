@@ -5,6 +5,8 @@
  * ─────────────────────────────────────────────────────────────
  */
 
+import { audioUrls, photoUrls, slug, titleFromUrl } from "@/lib/media";
+
 export const BIRTHDAY = {
   name: "Lisha",
   date: "13 August",
@@ -175,10 +177,10 @@ const spans: Memory["span"][] = [
   "normal",
 ];
 
-export const memories: Memory[] = Array.from({ length: 16 }, (_, i) => ({
-  src: `/memories/photo-${String(i + 1).padStart(2, "0")}.jpg`,
+export const memories: Memory[] = photoUrls.map((src, i) => ({
+  src,
   caption: captions[i] ?? "A moment worth keeping.",
-  span: spans[i] ?? "normal",
+  span: spans[i % spans.length] ?? "normal",
 }));
 
 /** 13 THINGS I LOVE ABOUT YOU */

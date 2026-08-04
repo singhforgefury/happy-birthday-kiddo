@@ -1,15 +1,20 @@
 import confetti from "canvas-confetti";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
-import { finalMessage } from "@/data/content";
+import { closing, finalMessage } from "@/data/content";
 import { Reveal } from "./Reveal";
 import { Sunflower } from "./Atmosphere";
 
 type Floater = { x: number; delay: number; dur: number; drift: number; kind: "heart" | "petal" };
+type Spark = { x: number; y: number; size: number; delay: number; dur: number };
+type Bloom = { x: number; y: number; size: number; delay: number };
 
 export function FinalSurprise({ onBrighten }: { onBrighten: (v: boolean) => void }) {
   const [revealed, setRevealed] = useState(false);
+  const [phase, setPhase] = useState(0); // 0 message · 1 line one · 2 line two
   const [floaters, setFloaters] = useState<Floater[]>([]);
+  const [sparks, setSparks] = useState<Spark[]>([]);
+  const [blooms, setBlooms] = useState<Bloom[]>([]);
 
   const burst = useCallback(() => {
     const base = { disableForReducedMotion: true, zIndex: 45 };
@@ -17,7 +22,6 @@ export function FinalSurprise({ onBrighten }: { onBrighten: (v: boolean) => void
 
     confetti({ ...base, particleCount: 160, spread: 90, origin: { y: 0.7 }, colors: pink });
 
-    // fireworks
     let n = 0;
     const fw = setInterval(() => {
       n += 1;
@@ -34,7 +38,6 @@ export function FinalSurprise({ onBrighten }: { onBrighten: (v: boolean) => void
       if (n > 7) clearInterval(fw);
     }, 520);
 
-    // sparkles
     confetti({
       ...base,
       particleCount: 90,
@@ -59,7 +62,34 @@ export function FinalSurprise({ onBrighten }: { onBrighten: (v: boolean) => void
         kind: i % 3 === 0 ? "petal" : "heart",
       })),
     );
+    setSparks(
+      Array.from({ length: 40 }, () => ({
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 2.6 + 1.2,
+        delay: Math.random() * 4,
+        dur: Math.random() * 3 + 2.4,
+      })),
+    );
+    setBlooms(
+      Array.from({ length: 10 }, (_, i) => ({
+        x: 4 + Math.random() * 92,
+        y: 55 + Math.random() * 40,
+        size: 22 + Math.random() * 34,
+        delay: 0.4 + i * 0.28,
+      })),
+    );
   };
+
+  // Stage the closing lines after the reveal.
+  useEffect(() => {
+    if (!revealed) return;
+    const t = [
+      setTimeout(() => setPhase(1), 5200),
+      setTimeout(() => setPhase(2), 8200),
+    ];
+    return () => t.forEach(clearTimeout);
+  }, [revealed]);
 
   useEffect(() => () => onBrighten(false), [onBrighten]);
 
@@ -67,9 +97,36 @@ export function FinalSurprise({ onBrighten }: { onBrighten: (v: boolean) => void
     <section id="surprise" className="relative overflow-hidden px-6 py-32 sm:py-44">
       {revealed && (
         <div aria-hidden className="pointer-events-none absolute inset-0 z-0">
+          {sparks.map((s, i) => (
+            <span
+              key={`s${i}`}
+              className="absolute rounded-full bg-cream"
+              style={{
+                left: `${s.x}%`,
+                top: `${s.y}%`,
+                width: s.size,
+                height: s.size,
+                boxShadow: "0 0 10px oklch(0.85 0.148 88 / 0.9)",
+                animation: `twinkle ${s.dur}s ease-in-out ${s.delay}s infinite`,
+              }}
+            />
+          ))}
+          {blooms.map((b, i) => (
+            <span
+              key={`b${i}`}
+              className="absolute block"
+              style={{
+                left: `${b.x}%`,
+                top: `${b.y}%`,
+                animation: `bloom-in 1.6s cubic-bezier(.16,1,.3,1) ${b.delay}s both`,
+              }}
+            >
+              <Sunflower size={b.size} className="opacity-70" />
+            </span>
+          ))}
           {floaters.map((f, i) => (
             <span
-              key={i}
+              key={`f${i}`}
               className="absolute bottom-0 block"
               style={
                 {
@@ -84,6 +141,16 @@ export function FinalSurprise({ onBrighten }: { onBrighten: (v: boolean) => void
               {f.kind === "heart" ? "❤️" : "🌻"}
             </span>
           ))}
+          <motion.span
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 6, ease: "easeInOut" }}
+            style={{
+              background:
+                "radial-gradient(70% 60% at 50% 45%, oklch(0.85 0.148 88 / 0.16), transparent 70%)",
+            }}
+          />
         </div>
       )}
 
@@ -130,12 +197,39 @@ export function FinalSurprise({ onBrighten }: { onBrighten: (v: boolean) => void
             transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
             className="glass mt-10 rounded-[2rem] px-7 py-12 sm:px-14"
           >
-            <h2 className="text-ink glow-text font-display text-4xl leading-tight font-medium sm:text-6xl">
+            <p className="font-hand text-3xl leading-relaxed text-gold/90 sm:text-4xl">
               {finalMessage.heading}
-            </h2>
-            <p className="font-serif mx-auto mt-7 max-w-xl text-lg leading-relaxed text-cream/80 italic sm:text-xl">
+            </p>
+            <p className="font-hand mx-auto mt-6 max-w-xl text-2xl leading-relaxed text-cream/85 sm:text-3xl">
               {finalMessage.body}
             </p>
+
+            <AnimatePresence>
+              {phase >= 1 && (
+                <motion.h2
+                  initial={{ opacity: 0, y: 24, filter: "blur(20px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-ink glow-text font-display mt-12 text-4xl leading-tight font-medium sm:text-6xl"
+                >
+                  {closing.line1}
+                </motion.h2>
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+              {phase >= 2 && (
+                <motion.p
+                  initial={{ opacity: 0, filter: "blur(18px)" }}
+                  animate={{ opacity: 1, filter: "blur(0px)" }}
+                  transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="font-serif mt-6 text-lg text-cream/75 italic sm:text-2xl"
+                >
+                  {closing.line2}
+                </motion.p>
+              )}
+            </AnimatePresence>
+
             <button
               onClick={burst}
               className="font-sans mt-10 cursor-pointer text-[0.62rem] tracking-[0.3em] text-gold/80 uppercase transition-colors hover:text-gold"

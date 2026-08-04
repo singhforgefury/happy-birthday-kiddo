@@ -13,6 +13,15 @@ export const BIRTHDAY = {
   title: "Happy Birthday, Lisha ❤️",
   subtitle:
     "Today isn't just your birthday. It's the day the world became a little more beautiful.",
+  /** Month is 1-based. Used for the hero countdown. */
+  month: 8,
+  day: 13,
+};
+
+/** The two lines the story fades into, right at the very end. */
+export const closing = {
+  line1: "Happy Birthday, Lisha ❤️",
+  line2: "Thank you for making my world more beautiful.",
 };
 
 /**

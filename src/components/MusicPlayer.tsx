@@ -24,6 +24,7 @@ export function MusicPlayer({ active }: { active: boolean }) {
   const [blocked, setBlocked] = useState(false);
   // If the audio file itself can't load, never show the play overlay.
   const [audioBroken, setAudioBroken] = useState(false);
+  const [canPlay, setCanPlay] = useState(false);
 
   const play = useCallback(() => {
     const el = audioRef.current;
@@ -115,7 +116,7 @@ export function MusicPlayer({ active }: { active: boolean }) {
 
   return (
     <>
-      {blocked && !audioBroken && (
+      {blocked && canPlay && !audioBroken && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -168,12 +169,17 @@ export function MusicPlayer({ active }: { active: boolean }) {
           ref={audioRef}
           src={track.src}
           preload="metadata"
+          onCanPlay={() => {
+            setCanPlay(true);
+            setAudioBroken(false);
+          }}
           onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
           onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
           onEnded={() => advance(1, true)}
           onError={() => {
             setPlaying(false);
             setAudioBroken(true);
+            setCanPlay(false);
             setBlocked(false);
           }}
         />

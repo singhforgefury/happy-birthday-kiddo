@@ -1,7 +1,7 @@
 import confetti from "canvas-confetti";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
-import { closing, finalMessage } from "@/data/content";
+import { finalMessage } from "@/data/content";
 import { Reveal } from "./Reveal";
 import { Sunflower } from "./Atmosphere";
 
@@ -212,7 +212,7 @@ export function FinalSurprise({ onBrighten }: { onBrighten: (v: boolean) => void
                   transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
                   className="text-ink glow-text font-display mt-12 text-4xl leading-tight font-medium sm:text-6xl"
                 >
-                  {closing.line1}
+                  {finalMessage.heading}
                 </motion.h2>
               )}
             </AnimatePresence>
@@ -225,7 +225,7 @@ export function FinalSurprise({ onBrighten }: { onBrighten: (v: boolean) => void
                   transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
                   className="font-serif mt-6 text-lg text-cream/75 italic sm:text-2xl"
                 >
-                  {closing.line2}
+                  {finalMessage.body}
                 </motion.p>
               )}
             </AnimatePresence>

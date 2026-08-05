@@ -5,23 +5,12 @@
  * ─────────────────────────────────────────────────────────────
  */
 
-import { audioUrls, photoUrls, slug, titleFromUrl } from "@/lib/media";
-
 export const BIRTHDAY = {
   name: "Lisha",
   date: "13 August",
   title: "Happy Birthday, Lisha ❤️",
   subtitle:
     "Today isn't just your birthday. It's the day the world became a little more beautiful.",
-  /** Month is 1-based. Used for the hero countdown. */
-  month: 8,
-  day: 13,
-};
-
-/** The two lines the story fades into, right at the very end. */
-export const closing = {
-  line1: "Happy Birthday, Lisha ❤️",
-  line2: "Thank you for making my world more beautiful.",
 };
 
 /**
@@ -34,65 +23,51 @@ export type Song = {
   chapter: string;
   emoji: string;
   src: string;
-};
-
-/**
- * Songs are discovered automatically from `public/music/playlist/`.
- * Metadata below is matched loosely by filename, so "01 - Yeh Fitoor Mera.mp3"
- * still gets the right artist, chapter and emoji.
- */
-const songMeta: { match: string; title: string; artist: string; chapter: string; emoji: string }[] =
-  [
-    {
-      match: "yehfitoormera",
-      title: "Yeh Fitoor Mera",
-      artist: "Arijit Singh",
-      chapter: "Love",
-      emoji: "❤️",
-    },
-    {
-      match: "wheredallthetimego",
-      title: "Where'd All the Time Go?",
-      artist: "Dr. Dog",
-      chapter: "Happy Memories",
-      emoji: "🌤",
-    },
-    {
-      match: "justthetwoofus",
-      title: "Just the Two of Us",
-      artist: "Grover Washington Jr.",
-      chapter: "Our Song",
-      emoji: "🤍",
-    },
-    {
-      match: "forever",
-      title: "Forever",
-      artist: "The Little Dippers",
-      chapter: "Forever",
-      emoji: "🌙",
-    },
-    {
-      match: "lovemenot",
-      title: "Love Me Not",
-      artist: "Ravyn Lenae",
-      chapter: "Forever",
-      emoji: "🌙",
-    },
-    { match: "kids", title: "Kids", artist: "Current Joys", chapter: "Ending", emoji: "✨" },
-  ];
-
-export const songs: Song[] = audioUrls.map((src) => {
-  const key = slug(src.split("/").pop() ?? src);
-  const meta = songMeta.find((m) => key.includes(m.match));
-  return {
-    title: meta?.title ?? titleFromUrl(src),
-    artist: meta?.artist ?? "Our playlist",
-    chapter: meta?.chapter ?? "More",
-    emoji: meta?.emoji ?? "🎵",
-    src,
   };
-});
-
+ export const songs: Song[] = [
+  {
+    title: "Yeh Fitoor Mera",
+    artist: "Arijit Singh",
+    chapter: "Love",
+    emoji: "❤️",
+    src: "/music/playlist/yeh-fitoor-mera.mp3",
+  },
+  {
+    title: "Where'd All The Time Go?",
+    artist: "Dr. Dog",
+    chapter: "Happy Memories",
+    emoji: "🌤",
+    src: "/music/playlist/whered-all-the-time.mp3",
+  },
+  {
+    title: "Just The Two Of Us",
+    artist: "Grover Washington Jr.",
+    chapter: "Us",
+    emoji: "🤍",
+    src: "/music/playlist/just-the-two-of-us.mp3",
+  },
+  {
+    title: "Forever",
+    artist: "The Little Dippers",
+    chapter: "Forever",
+    emoji: "🌻",
+    src: "/music/playlist/forever.mp3",
+  },
+  {
+    title: "Love Me Not",
+    artist: "Ravyn Lenae",
+    chapter: "Bonus",
+    emoji: "✨",
+    src: "/music/playlist/love-me-not.mp3",
+  },
+  {
+    title: "Kids",
+    artist: "MGMT",
+    chapter: "Bonus",
+    emoji: "🌙",
+    src: "/music/playlist/kids.mp3",
+  },
+];
 
 /** OUR STORY timeline */
 export type StoryEvent = {
@@ -109,35 +84,35 @@ export const story: StoryEvent[] = [
     title: "First saw each other",
     place: "MMA Gym",
     when: "Where it started",
-    note: "Before a single word was said, there was already a feeling I couldn't name.",
+    note: "I still remember the first time I saw you. You were talking to Rahul Sir, and somehow you stood out without even trying. You seemed quiet, a little introverted, but there was this playful side to you that I noticed immediately. We never really spoke during our MMA days, but I still remember Jyoti Didi joking, 'She could be your girlfriend someday.' Looking back now... she was right.",
   },
   {
     icon: "🏸",
     title: "First met",
     place: "Vindha Gardens Society",
     when: "Badminton evenings",
-    note: "A game, a laugh, and a conversation that refused to end.",
+    note: "When you invited me to play badminton with you and parineeka, I was excited and terrified at the same time. I was the one who started the conversation but I was so nervous that every sentence felt awkward. Even sitting beside you made my heart race. But by the end of that evening you hugged me for the very first time. that was the most romantic thing I still remember it like it happened yesterday..",
   },
   {
     icon: "☕",
     title: "First official date",
     place: "Pawfee House",
     when: "Our first table for two",
-    note: "The coffee went cold because we forgot the rest of the world existed.",
+    note: "You planned everything as a surprise and I had absolutely no idea where we were going until we arrived at Pawfee House. That made it even more special. We ordered an Oreo milkshake and a vanilla milkshake if im right . that orange cat i remember chose me, while you were playing with the poddle. it was the most perfect date till now.",
   },
   {
     icon: "❤️",
     title: "Love Anniversary",
     place: "10 April 2025",
     when: "The day we said yes",
-    note: "The day 'us' stopped being a feeling and became a promise.",
+    note: "Somehow, I finally found the courage to tell you how I felt. Then you said something I'll never forget: tujhe lgta h m tujhe mna karungi? In that moment  i felt so  good. it became one of the happiest memories of my life.",
   },
   {
     icon: "🎂",
     title: "Happy Birthday",
     place: "13 August",
     when: "Today",
-    note: "Yours, mine, ours — my favourite date on every calendar.",
+    note: "Today isn't just about celebrating your birthday. It's about celebrating you the person who has made my world brighter in more ways than I can explain. I made this little universe type shi because I wanted you to know just how deeply you're loved. Every memory, every photo, every song, and every word here exists for one reason to remind you that you are incredibly special to me.",
   },
 ];
 
@@ -149,21 +124,21 @@ export const story: StoryEvent[] = [
 export type Memory = { src: string; caption: string; span: "tall" | "wide" | "normal" };
 
 const captions: string[] = [
-  "The day everything quietly began.",
-  "A smile I'll never get tired of.",
-  "Our favourite little adventure.",
-  "The moment I wished time would slow down.",
-  "You, laughing at something only we found funny.",
-  "Golden hour, and you glowing right through it.",
-  "The evening we lost track of every hour.",
-  "Somewhere between a plan and an accident.",
-  "Rain, one umbrella, zero complaints.",
-  "The look you give me when you think I'm not watching.",
-  "A very ordinary Tuesday that I still remember perfectly.",
-  "Coffee, sunlight, and nowhere else to be.",
-  "The night the whole city felt like ours.",
-  "Sunflowers, because of course.",
-  "Us, exactly as we are.",
+  "you sent me a fit check in that adorable little top. But what caught my attention were your nails you had grown them out for the first time and I remember thinking how unbelievably pretty they looked in that shade that we ordered together.",
+  "sunflowerrrrrrr for my sunflower. Watching you smile while wearing the real madird jersey I gifted you made you looked even more cutee. And i remember playing sunflower while giving you the sunflower.",
+  "i bought those flowers hehehehe.😌.",
+  "For one day I became your personal driver dropping you off, picking you up we were litreally shivering throughout the ride  . (I'm still not Aarushi's biggest fan though). 😂.",
+  "The orange cat is mine. Pawfee House is one of those little memories that still makes me smile. .",
+  "bunk krri hhh gandi bachhi 😤😤.",
+  "You tying my shoelaces is such a tiny moment but somehow it's one of the sweetest memories I have. .",
+  "You and your favourite poodle. I don't know who looked happier you or the dog..",
+  "My favourite photo of all. Little Lisha. Every time I look at this picture I can't help but smile and wonder how someone can be so tiny 🥰",
+  "look so stunning in the Traditionals . I still remember staring at this picture for so long .",
+  "kiddooooo. If I could I'd tell little Lisha that one day she'd completely change someone's world..",
+  "that guy is so cute.",
+  "tu bhi thodi si hai.",
+  "kitni pyari lgri hhh.",
+  "tera favourite doggie.",
   "And still my favourite photograph.",
 ];
 
@@ -186,26 +161,26 @@ const spans: Memory["span"][] = [
   "normal",
 ];
 
-export const memories: Memory[] = photoUrls.map((src, i) => ({
-  src,
+export const memories: Memory[] = Array.from({ length: 16 }, (_, i) => ({
+  src: `/memories/photos/${i + 1}.jpg`,
   caption: captions[i] ?? "A moment worth keeping.",
-  span: spans[i % spans.length] ?? "normal",
+  span: spans[i] ?? "normal",
 }));
 
 /** 13 THINGS I LOVE ABOUT YOU */
 export const reasons: string[] = [
-  "The way your laugh arrives a second before the joke lands.",
-  "How you make an ordinary evening feel like an occasion.",
-  "That you notice the smallest things — and remember them.",
-  "The way you care about people without ever making it a performance.",
-  "How stubbornly kind you are, even on your worst days.",
-  "Your terrible, wonderful sense of timing.",
-  "The way you say my name when you're happy about something.",
-  "That you are the calm and the chaos, and somehow both suit you.",
-  "How you keep growing, quietly and relentlessly.",
-  "The sunflowers. Always the sunflowers.",
-  "That silence with you never once felt empty.",
-  "How safe the world feels when you're in it.",
+  "SUNFLOWERS-Every time I see a sunflower I smile because they remind me of youbright, warm, and impossible to ignore.",
+  "DOGS-I don't think I'll ever see one without thinking of you..",
+  "GLOVES-They remind me of the first time I saw you... even before we had our first conversation.",
+  "Badminton Courts-Every badminton court reminds me of the day everything truly began.",
+  "STRAWBERRY OREOS-.",
+  "Driving Around the City-Every time I drive, I remember the day I became your unofficial chauffeur.",
+  "Pretty Nails-I'll probably never look at freshly painted nails the same way again.",
+  "Untied Shoelaces-Because someone once knelt down just to tie mine.",
+  "Rainy Evenings-They make me want long conversations and slow walks with you.",
+  "Childhood Photos-Every childhood photo reminds me that somewhere, little Lisha was growing into the person who would completely change my life.",
+  "The Songs in This Website-I'll never hear them the same way again because now they'll always belong to us.",
+  "Home-This one's strange... but whenever something feels like home, it reminds me of you.",
   "And that out of everyone, you chose me.",
 ];
 
@@ -223,7 +198,7 @@ export const letter = {
 
 /** FINAL SURPRISE message */
 export const finalMessage = {
-  heading: "Happy Birthday, my love ❤️",
+  heading: "Happy Birthday, kiddo ❤️",
   body: "Here's to 13 August, and to every ordinary day you quietly turn into something extraordinary. Thank you for being the best part of my life. I hope this year is as warm and beautiful as you are.",
 };
 

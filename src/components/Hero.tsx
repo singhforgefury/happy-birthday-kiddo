@@ -26,6 +26,11 @@ function useCountdown() {
   return useMemo(() => {
     if (!now) return null;
     const { target, isToday } = nextBirthday(now);
+
+console.log("BIRTHDAY:", BIRTHDAY);
+console.log("Target:", target);
+console.log("Target time:", target.getTime());
+console.log("Now time:", now.getTime());
     if (isToday) return { arrived: true, parts: null as Parts | null };
     const ms = Math.max(0, target.getTime() - now.getTime());
     const s = Math.floor(ms / 1000);
@@ -49,16 +54,33 @@ export function Hero() {
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
   const countdown = useCountdown();
 
-  const headline = countdown?.arrived
-    ? ["Happy", "Birthday", "Lisha ❤️"]
-    : ["Happy", "Birthday", "Lisha ❤️"];
-
+  const headline = ["Happy", "Birthday", "Lisha"];
   return (
     <section
       ref={ref}
       className="relative flex min-h-[100svh] items-center justify-center overflow-hidden px-6 pt-24 pb-32"
+      
     >
-      <motion.div style={{ y, opacity, scale }} className="relative z-10 w-full max-w-4xl">
+      {/* Cinematic light behind the story */}
+<motion.div
+  initial={{ opacity: 0, scale: 0.7 }}
+  animate={{
+    opacity: [0.2, 0.38, 0.2],
+    scale: [0.85, 1.08, 0.85],
+  }}
+  transition={{
+    duration: 8,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="pointer-events-none absolute left-1/2 top-[42%] h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full"
+  style={{
+    background:
+      "radial-gradient(circle, oklch(0.72 0.16 350 / 0.18) 0%, oklch(0.66 0.18 25 / 0.1) 35%, transparent 70%)",
+    filter: "blur(45px)",
+  }}
+/> 
+  <motion.div style={{ y, opacity, scale }} className="relative z-10 w-full max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -73,18 +95,54 @@ export function Hero() {
         </motion.div>
 
         <h1 className="mt-8 text-center">
-          {headline.map((word, i) => (
-            <motion.span
-              key={word}
-              initial={{ opacity: 0, y: 40, filter: "blur(16px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 1.4, delay: 0.35 + i * 0.18, ease: [0.16, 1, 0.3, 1] }}
-              className="text-ink glow-text font-display block text-[clamp(2.6rem,10vw,7rem)] leading-[0.98] font-medium"
-            >
-              {word}
-            </motion.span>
-          ))}
-        </h1>
+  {headline.map((word, i) => (
+    <motion.span
+      key={word}
+      initial={{
+        opacity: 0,
+        y: 55,
+        scale: 0.96,
+        filter: "blur(18px)",
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+      }}
+      transition={{
+        duration: 1.5,
+        delay: 0.3 + i * 0.22,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className="text-ink glow-text font-display block text-[clamp(2.6rem,10vw,7rem)] leading-[0.98] font-medium"
+    >
+      {word}
+    </motion.span>
+  ))}
+
+  <motion.span
+    initial={{ opacity: 0, scale: 0.4, rotate: -12 }}
+    animate={{
+      opacity: 1,
+      scale: [1, 1.12, 1],
+      rotate: 0,
+    }}
+    transition={{
+      opacity: { duration: 0.8, delay: 1.15 },
+      scale: {
+        duration: 2.2,
+        delay: 1.35,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+      rotate: { duration: 1, delay: 1.15 },
+    }}
+    className="mt-5 inline-block text-5xl drop-shadow-[0_0_28px_rgba(255,120,160,0.55)] sm:text-6xl"
+  >
+    ❤️
+  </motion.span>
+</h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}

@@ -7,11 +7,12 @@
 
 export const BIRTHDAY = {
   name: "Lisha",
+  day: 13,
+  month: 8,
   date: "13 August",
-  title: "Happy Birthday, Lisha ❤️",
-  subtitle:
-    "Today isn't just your birthday. It's the day the world became a little more beautiful.",
-};
+  title: "Happy Birthday, Kiddo ❤️",
+  subtitle: "Today isn't just your birthday. It's the day the world became a little more beautiful.",
+}
 
 /**
  * MUSIC — drop your .mp3 files into `public/music/` keeping the same names,
@@ -26,6 +27,13 @@ export type Song = {
   };
  export const songs: Song[] = [
   {
+    title: "Kids",
+    artist: "MGMT",
+    chapter: "Bonus",
+    emoji: "🌙",
+    src: "/music/playlist/kids.mp3",
+  },
+  {
     title: "Yeh Fitoor Mera",
     artist: "Arijit Singh",
     chapter: "Love",
@@ -39,12 +47,14 @@ export type Song = {
     emoji: "🌤",
     src: "/music/playlist/whered-all-the-time.mp3",
   },
+  
   {
-    title: "Just The Two Of Us",
-    artist: "Grover Washington Jr.",
-    chapter: "Us",
-    emoji: "🤍",
-    src: "/music/playlist/just-the-two-of-us.mp3",
+    title: "Love Me Not",
+    artist: "Ravyn Lenae",
+    chapter: "Bonus",
+    emoji: "✨",
+    src: "/music/playlist/love-me-not.mp3",
+    
   },
   {
     title: "Forever",
@@ -53,20 +63,7 @@ export type Song = {
     emoji: "🌻",
     src: "/music/playlist/forever.mp3",
   },
-  {
-    title: "Love Me Not",
-    artist: "Ravyn Lenae",
-    chapter: "Bonus",
-    emoji: "✨",
-    src: "/music/playlist/love-me-not.mp3",
-  },
-  {
-    title: "Kids",
-    artist: "MGMT",
-    chapter: "Bonus",
-    emoji: "🌙",
-    src: "/music/playlist/kids.mp3",
-  },
+  
 ];
 
 /** OUR STORY timeline */
@@ -136,9 +133,9 @@ const captions: string[] = [
   "look so stunning in the Traditionals . I still remember staring at this picture for so long .",
   "kiddooooo. If I could I'd tell little Lisha that one day she'd completely change someone's world..",
   "that guy is so cute.",
-  "tu bhi thodi si hai.",
+  "fav picture of us.",
   "kitni pyari lgri hhh.",
-  "tera favourite doggie.",
+  "pose🔥🔥",
   "And still my favourite photograph.",
 ];
 
@@ -186,14 +183,18 @@ export const reasons: string[] = [
 
 /** FINAL LETTER (handwritten paper) */
 export const letter = {
-  greeting: "My dearest Lisha,",
+  greeting: "Hey Kiddo,",
   paragraphs: [
-    "There are things I say easily, and then there is this — the quiet thing I keep meaning to tell you and never quite manage out loud. So I'm writing it instead: loving you is the simplest decision I've ever made.",
-    "When the day gets loud, my mind goes back to something small. Not a big moment. Just you, mid-sentence, eyes bright, completely unaware that I was busy falling for you all over again.",
-    "This year, I promise you more of the ordinary: more late conversations, more badminton evenings, more coffee that goes cold. And every year after that, the same promise again.",
+    "I don't really know how to write a letter like this without making it sound way too serious or cheesy, but I wanted to try anyway. There are so many things I could say about you, and somehow when I actually sit down to write them, my mind goes completely blank. So I'll just start with the obvious one I'm really, really glad I found you.",
+    
+    "I love the little things about us the most. The random conversations, the stupid jokes, geediyan, the moments where we're doing absolutely nothing and somehow I'm still having a great time. I don't think you realise how many of these tiny moments stay in my head. Sometimes I'll randomly remember something you said or did and just smile like an idiot.",
+    
+    "I don't know what the future is going to look like, and honestly, I don't want to pretend that I have everything figured out. I just know that I want more of this. More conversations, more memories, more laughing at things that probably aren't even funny, more days where we look back and think, 'how did we even get here?' And if I get to keep making those memories with you, I'll be pretty happy.",
+    
+    "So yeah, this is me trying to put into words something I probably won't ever be able to explain properly. Thank you for being you, Kiddo. And thank you for becoming such an important part of my life without even trying.",
   ],
-  signature: "Always yours,",
-  from: "— Me",
+  signature: "Always,",
+  from: "— your strawberry cupcake",
 };
 
 /** FINAL SURPRISE message */

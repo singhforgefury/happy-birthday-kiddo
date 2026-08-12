@@ -11,9 +11,18 @@ const fmt = (t: number) => {
 
 type RepeatMode = "off" | "all" | "one";
 
-export function MusicPlayer({ active }: { active: boolean }) {
+type MusicPlayerProps = {
+  active: boolean;
+  chapter?: number;
+};
+
+export function MusicPlayer({
+  active,
+  chapter = 0,
+}: MusicPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [index, setIndex] = useState(0);
+  const chapterSongs = [0, 1, 2, 3, 4];
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.7);
   const [progress, setProgress] = useState(0);
@@ -88,7 +97,13 @@ export function MusicPlayer({ active }: { active: boolean }) {
     },
     [play],
   );
+useEffect(() => {
+  const target = chapterSongs[Math.min(chapter, chapterSongs.length - 1)] ?? 0;
 
+  if (target !== index) {
+    go(target);
+  }
+}, [chapter, index, go]);
   const advance = useCallback(
     (dir: number, auto = false) => {
       if (auto && repeat === "one") {
